@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  my_mysql:
+    image: mysql:8.0
+    container_name: my_mysql
+    volumes:
+      - data_mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: wp_db
+      MYSQL_PASSWORD: 12345
+      MYSQL_DATABASE: first_wp
+    networks:
+      - my_network
+
+  my_wp:
+    image: wordpress
+    container_name: my_wp
+    volumes:
+      - data_wp:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: my_mysql
+      WORDPRESS_DB_USER: wp_db
+      WORDPRESS_DB_PASSWORD: 12345
+      WORDPRESS_DB_NAME: first_wp
+    networks:
+      - my_network
+    ports:
+      - "8090:80"
+    depends_on:
+      - my_mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8888:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=test
+      - PMA_HOST=my_mysql
+    networks:
+      - my_network
+    depends_on:
+      - my_mysql
+
+networks:
+  my_network:
+
+volumes:
+  data_mysql:
+  data_wp:
