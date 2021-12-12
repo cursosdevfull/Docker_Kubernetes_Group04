@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: serverweb3
+  labels:
+    app: frontend
+    env: dev
+spec:
+  containers:
+    - name: contenedor
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: serverweb4
+  labels:
+    app: backend
+    env: dev
+spec:
+  containers:
+    - name: contenedor
+      image: jenkins/jenkins

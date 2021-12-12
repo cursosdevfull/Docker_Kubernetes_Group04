@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: serverweb3
+spec:
+  containers:
+    - name: contenedor
+      image: nginx:alpine
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: serverweb4
+spec:
+  containers:
+    - name: contenedor
+      image: jenkins/jenkins
