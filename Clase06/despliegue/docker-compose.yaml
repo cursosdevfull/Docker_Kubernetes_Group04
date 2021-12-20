@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  frontend-app:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: localhost:5000/frontend
+    container_name: frontend-app
+    ports:
+      - "8000:3000"
+    environment:
+      - PORT=3000
+      - SERVICE_BACKEND1=http://localhost:8010/api/message
+    networks:
+      - ms-networks
+
+  backend1-app:
+    build:
+      context: .
+      dockerfile: backend1/Dockerfile
+    image: localhost:5000/backend1
+    container_name: backend1-app
+    ports:
+      - "8010:3010"
+    environment:
+      - PORT=3010
+      - SERVICE_BACKEND2=http://backend2-app:3020/api/message
+    networks:
+      - ms-networks
+
+  backend2-app:
+    build:
+      context: .
+      dockerfile: backend2/Dockerfile
+    image: localhost:5000/backend2
+    container_name: backend2-app
+    environment:
+      - PORT=3020
+    networks:
+      - ms-networks
+
+networks:
+  ms-networks:

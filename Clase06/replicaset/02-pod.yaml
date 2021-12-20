@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: serverweb-backend
+  labels:
+    app: backend-pod
+spec:
+  containers:
+    - name: contenedor
+      image: nginx:alpine

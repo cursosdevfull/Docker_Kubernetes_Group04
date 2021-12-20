@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend-rs
+  labels:
+    app: frontend-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend-pod
+  template:
+    metadata:
+      labels:
+        app: frontend-pod
+    spec:
+      containers:
+        - name: container-nginx
+          image: nginx:alpine
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: frontend-pod

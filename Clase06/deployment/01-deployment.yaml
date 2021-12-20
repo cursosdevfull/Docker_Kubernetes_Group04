@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-backend
+  labels:
+    app: backend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: backend-pod
+  template:
+    metadata:
+      labels:
+        app: backend-pod
+    spec:
+      containers:
+        - name: contenedor1
+          image: python:3.7-alpine
+          command:
+            [
+              "sh",
+              "-c",
+              'echo "contenedor1" > index.html && python -m http.server 8081',
+            ]
