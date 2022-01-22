@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend2-app
+  labels:
+    app: backend2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend2-app
+  template:
+    metadata:
+      labels:
+        app: backend2-app
+    spec:
+      containers:
+        - name: backend2-container
+          image: gcr.io/microservicios03/backend2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3020
+          env:
+            - name: PORT
+              value: "3020"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3020
+            initialDelaySeconds: 20
+            periodSeconds: 15

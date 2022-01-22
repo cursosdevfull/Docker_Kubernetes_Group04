@@ -5,7 +5,7 @@ const axios = require("axios");
 
 app.use(cors());
 
-app.get("/health", (req, res) => res.send("I am alive!"));
+app.get("/healthz", (req, res) => res.send("I am alive!"));
 
 app.get("/api/message", async (req, res) => {
   const path =

@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+app.use(cors());
 
 app.use("/", express.static(__dirname + "/public"));
 
-app.get("/health", (req, res) => res.send("I am alive!"));
+app.get("/healthz", (req, res) => res.send("I am alive!"));
 
 app.get("/api/config", (req, res) =>
   res.json({
@@ -12,7 +15,7 @@ app.get("/api/config", (req, res) =>
   })
 );
 
-app.use("*", (req, res) => {
+app.use("**", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
